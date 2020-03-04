@@ -1,11 +1,24 @@
-const mongoose = require('mongoose')
-    Schema = mongoose.Schema
-    PostInfoSchema = require('./postInfo')
+const mongoose = require('mongoose');
 
-var PostSchema = new Schema({
-    vtype: { type: Number},
-    postDetail: PostInfoSchema,
-    privacy: { type: Number},
+const PostSchema = new mongoose.Schema({
+    vtype: { 
+        type: String,
+        enum: ['post','comment'],
+        required: true
+    },
+    parent: {
+        type: mongoose.SchemaTypes.ObjectId,
+        refer: 'Post', 
+        default: null
+    },
+    img: { type: String, default: null },
+    detail: { type: String, default: null },
+    owner: {
+        type: mongoose.SchemaTypes.ObjectId,
+        refer: 'User',
+        required: true
+    },
+    privacy: { type: Number, required: true, enum: [ 0,1] },
 })
 
-module.exports = mongoose.model('Post',PostSchema)
+module.exports = mongoose.model('Post', PostSchema)

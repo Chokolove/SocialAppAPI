@@ -1,20 +1,57 @@
-const mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    BasicInfoSchema = require('./basicInfo'),
-    EduInfoSchema = require('./eduInfo'),
-    WorkInfoSchema = require('./workInfo'),
-    LikeInfoSchema = require('./likeInfo');
+const mongoose = require('mongoose');
 
-var UserSchema = new Schema({
-  user: { type: String },
-  pass: { type: String},
-  basicInfo: BasicInfoSchema,
-  eduInfos: [EduInfoSchema],
-  workInfos: [WorkInfoSchema],
-  likeInfos: [LikeInfoSchema],
-  // postInfos: [],
-  // friendInfos: [],
-  postInfo: { type: Schema.ObjectId , ref: 'PostInfoSchema'}
+const BasicInfoSchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true },
+  gender: {type: String},
+  birthday: { type: Date},
+  privacy: {type: Number, required: true, enum: [ 0,1] }
+});
+const EduInfoSchema = new mongoose.Schema({
+  detail: { type: String },
+  privacy: {type: Number, required: true, enum: [ 0,1] }
+});
+const WorkInfoSchema = new mongoose.Schema({
+  detail: { type: String },
+  privacy: {type: Number, required: true, enum: [ 0,1] }
+});
+const LikeInfoSchema = new mongoose.Schema({
+  detail: { type: String },
+  privacy: {type: Number, required: true, enum: [ 0,1] }
+});
+
+
+const UserSchema = new mongoose.Schema({
+  user: { 
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  pass: { 
+    type: String,
+    required: true,
+    trim: true
+  },
+  basicInfo: {
+    type: BasicInfoSchema
+  },
+  eduInfos: {
+    type: [EduInfoSchema],
+    default: []
+  },
+  workInfos: {
+    type: [WorkInfoSchema],
+    default: []
+  },
+  likeInfos: {
+    type: [LikeInfoSchema],
+    default: []
+  },
+  postInfos: { 
+    type: [mongoose.SchemaTypes.ObjectId] , 
+    ref: 'Post',
+    default: []
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema);
