@@ -51,6 +51,11 @@ const UserSchema = new mongoose.Schema({
     type: [mongoose.SchemaTypes.ObjectId] , 
     ref: 'Post',
     default: []
+  },
+  frineds:{
+    type: [mongoose.SchemaTypes.ObjectId] , 
+    ref: 'User',
+    default: [] 
   }
 });
 
