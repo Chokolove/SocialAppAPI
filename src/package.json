@@ -9,7 +9,7 @@
   "author": "Carlos Llamosas",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^2.12.0",
+    "fastify": "^2.15.1",
     "mongoose": "^5.9.2",
     "nodemon": "^2.0.2"
   }
